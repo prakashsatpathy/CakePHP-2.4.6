@@ -71,11 +71,13 @@ $button_name = ($this->request->action === 'add') ? 'Add' : 'Save';
                 'class' => 'form-horizontal',
                 'role' => 'form',
 				'type' =>'File'
+				
             ));
             ?>
             <?php
             echo $this->Form->create();
             foreach ($scaffoldFields as $scaffoldField) {
+				
                 if ($scaffoldField == $primaryKey) {
                     echo $this->Form->input($scaffoldField, array
                         (
@@ -96,8 +98,18 @@ $button_name = ($this->request->action === 'add') ? 'Add' : 'Save';
                         );
                         if (!empty($this->request->query[$scaffoldField]))
                             $_opt['selected'] = $this->request->query[$scaffoldField];
-
-                        $input = $this->Form->input($scaffoldField, $_opt);
+						
+						
+						
+						if($scaffoldField == "image") {
+							$_opt['type'] = 'file';
+							$input = $this->Form->input($scaffoldField, $_opt);
+						}
+						else {
+							$input = $this->Form->input($scaffoldField, $_opt);
+						}
+						$input = $this->Form->input($scaffoldField, $_opt);
+                       
 
                         if (in_array($field_type[$scaffoldField], array('date', 'datetime'))) {
                             $input = $this->Form->input($scaffoldField, array

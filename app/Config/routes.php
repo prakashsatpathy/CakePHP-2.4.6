@@ -10,6 +10,8 @@
 	Router::connect('/', array('controller' => 'users', 'action' => 'login'));
 	Router::connect('/dashboard', array('controller' => 'users', 'action' => 'dashboard'));
 	Router::connect('/admin/users/dashboard', array('controller' => 'users', 'action' => 'login'));
+	
+	Configure::write('Routing.prefixes', array('admin'));
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 

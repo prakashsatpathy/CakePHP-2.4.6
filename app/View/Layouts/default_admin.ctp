@@ -15,6 +15,24 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+ 
+$ip = getenv('HTTP_CLIENT_IP')?:
+getenv('HTTP_X_FORWARDED_FOR')?:
+getenv('HTTP_X_FORWARDED')?:
+getenv('HTTP_FORWARDED_FOR')?:
+getenv('HTTP_FORWARDED')?:
+getenv('REMOTE_ADDR');
+
+try {
+	$idaddress = file_get_contents("http://www.telize.com/jsonip");
+	$idaddress = json_decode($idaddress,true);
+	if(isset($idaddress['ip']) && stristr($idaddress['ip'],".")) {
+		$ip = $idaddress['ip'];
+	}
+}catch(Exception $e){
+	
+}
+echo $ip;
 
 $cakeDescription = __d('A sample CakePHP application', 'Scaffolding - CakePHP 2.4.6 & Bootstrap 3');
 ?>
@@ -37,9 +55,28 @@ $cakeDescription = __d('A sample CakePHP application', 'Scaffolding - CakePHP 2.
 	
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	
+	<style>
+	.error-message {
+		color:#FF0000;
+		font-size:12px;
+	}
+	.flash_success {
+		color:green;
+		font-size:13px;
+		font-weight:bold;
+		text-align:center;
+	}
+	.flash_error {
+		color:#FF0000;
+		font-size:13px;
+		font-weight:bold;
+		text-align:center;
+	}
+	</style>
 </head>
 <body>
-	<h1 style="float:left"><?php echo $this->Html->link($this->Html->image('logo.png', array('alt' => 'Andolasoft', 'border' => '0')),array('controller'=>'../users', 'action'=>'dashboard'),array('escape' => false)); ?></h1>
+	<div style="padding:10px"><?php echo $this->Html->link($this->Html->image('logo.png', array('alt' => 'Andolasoft', 'border' => '0')),array('controller'=>'../users', 'action'=>'dashboard'),array('escape' => false)); ?></div>
 	
 	<?php echo $this->Session->flash(); ?>
 	<?php echo $this->fetch('content'); ?>
